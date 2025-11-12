@@ -1,0 +1,167 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profile{
+    position: absolute;
+    right: 1rem;
+
+}
+.welcome{
+    width:95%;
+    height:13rem;
+    display:flex;
+    flex-wrap:wrap; 
+    text-align:center;
+
+
+    border-radius:1rem;
+    margin:2rem;
+    padding:1rem;
+}
+.welcome h2{
+    width:100% !important;
+}
+.welcome p{
+    width:100% !important;
+}
+.welcome div{
+    width:100% !important
+}
+.welcome div button{
+    margin-right:0.8rem;
+
+}
+.information{
+    display:flex;
+    align-self:center;
+}
+.work{
+    width:90%;
+    background-color: black;
+    color:#fff;
+}
+.get-started{
+    background-color: #fff;
+    margin-top:0.5rem;
+}
+.get-started:hover{
+    background-color:#fff;
+    transform: scale(1.08,1.08);
+    color: black !important;
+   
+}
+.Information{
+ width: 85%;
+  /* max-width: 1400px; */
+  margin:0 auto;
+
+
+  
+}
+.work{
+    padding:3rem 2rem;
+    border-radius:1rem;
+    
+}
+.Information h4{
+    text-align: center;
+    margin-bottom:2rem;
+}
+.work li{
+    margin-bottom:2rem;
+}
+.feature-card{
+    display: flex;
+      flex-direction: column;
+      justify-content: center;     /* vertical center */
+      align-items: center;          /* horizontal center */
+      min-height: 100vh;
+}
+.cards-container{
+    display:flex;
+    flex-wrap:wrap;
+    align-items: center;
+    justify-content: center;
+}
+.feature{
+    margin:2rem;
+    padding:1rem;
+    height:11rem;
+    border:2px solid rgb(164, 158, 158)!important;
+    box-shadow: 20px 5px 2px rgb(103, 86, 215);;
+}
+.card-body a{
+    text-decoration:none;
+    color:black
+}
+.feature-card{
+    margin-top:5rem;
+    background-color: rgb(246, 239, 239);
+}
+.feature-card h4{
+    color:lightsalmon;
+}
+.card-text{
+    font-size:0.75rem;
+}
+.card-title{
+    margin-bottom:1rem;
+}
+.feature:hover{
+    transform: scale(1.07,1.07);
+
+}
+.reviews{
+    max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top:7rem;
+
+}
+.review-card{
+    width:22rem;
+    margin:2rem;
+}
+.review-cards{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items: center;
+}
+
+.footer{
+    width:100%;
+    height:20rem;
+    background-color: rgb(247, 241, 241);
+    padding:3rem 1rem;
+}
+.footer-container{
+    width:100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.footer-container li{
+    font-size:0.85rem;
+    margin-top:0.5rem
+}
+
+.social-media {
+    font-size: 1.3rem;
+    width:100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+   margin-top: 1.2rem;
+}
+.social-media i{
+    margin-right:1rem;
+    opacity: 0.7;
+}
+.social-media i:hover{
+    opacity: 1;
+    transform:scale(1.1,1.1);
+}

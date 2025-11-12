@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grow Ai - Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Grow AI</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Practice</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Sessions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Progress</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link profile-icon" href="#"><i class="fa-solid fa-user"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+      <h1>Welcome back</h1>
+      <p class="subtitle">Here’s your progress and feedback summary</p>
+    </header>
+
+    <!-- Stats Cards -->
+    <section class="stats">
+      <div class="card">
+        <h3>Overall Score</h3>
+        <div class="circle-progress">82%</div>
+        <p class="change up">+5% from last session</p>
+      </div>
+      <div class="card">
+        <h3>Coding Practice</h3>
+        <div class="bar"><div class="fill" style="width:76%"></div></div>
+        <p class="value">76%</p>
+        <p class="change up">+5% from last session</p>
+      </div>
+      <div class="card">
+        <h3>Confidence Level</h3>
+        <div class="emoji"><i class="fa-regular fa-face-smile"></i></div>
+        <p class="value">73%</p>
+        <p class="change up">+6% from last session</p>
+      </div>
+      <div class="card">
+        <h3>Communication Clarity</h3>
+        <div class="icon"><i class="fa-solid fa-chart-line"></i></div>
+        <p class="value">78%</p>
+        <p class="change up">+6% from last session</p>
+      </div>
+    </section>
+
+    <!-- Progress Chart -->
+    <section class="chart">
+      <h2>Your Progress Over Time</h2>
+      <div class="tabs">
+        <button class="btn btn-primary" style="width:7rem; margin-top:-0.1rem;">Last 7 days</button>
+        <button class="btn btn-success">Month</button>
+        <button class="btn btn-info">All time</button>
+      </div>
+      <!-- Graph container -->
+<div class="graph">
+  <!-- Time-filter buttons -->
+
+  <!-- Placeholder for the chart (Chart.js canvas will be injected here) -->
+  <canvas id="progressChart"></canvas>
+
+  <!-- X-axis labels -->
+  <div class="x-axis">
+    <span>Jan</span><span>Feb</span><span>Mar</span><span>May</span>
+    <span>Jun</span><span>Jul</span><span>Aug</span>
+  </div>
+</div>
+    </section>
+
+    <!-- Recent Sessions -->
+    <section class="sessions">
+      <h2>Recent Sessions Feedback</h2>
+      <div class="session-card">
+        <div class="title">Company-specific Mock – Amazon SDE <span>Jul 1</span></div>
+        <div class="score">92%</div>
+        <div class="details">
+          <span>6sure 13min</span>
+          <span>50 rmin</span>
+          
+        </div>
+        <div class="tags">
+          <span class="tag positive">Confident</span>
+          <span class="tag positive">Clear Answers</span>
+          <span class="tag warning">Needs Conciseness</span>
+        </div>
+      </div>
+      <div class="session-card">
+        <div class="title">Role-specific Mock – Software Engineer <span>Jun 20</span></div>
+        <div class="score">80%</div>
+        <div class="details">
+          <span>3sure 90min</span>
+          <span>30 rmin</span>
+       
+        </div>
+        <div class="tags">
+          <span class="tag positive">Confident</span>
+          <span class="tag warning">Needs Conciseness</span>
+        </div>
+      </div>
+
+      <!-- AI Insights -->
+      <div class="insights">
+        <h3>AI Insights</h3>
+        <ul>
+          <li>You’ve improved your speaking pace by 12%.</li>
+          <li>Work on eye contact consistency.</li>
+          <li>Your confidence score trend is improving steadily.</li>
+        </ul>
+      </div>
+
+      <button class="btn btn-info">Start New Practice</button>
+    </section>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+
+
+</body>
+</html>

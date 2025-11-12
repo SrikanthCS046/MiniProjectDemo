@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Resume Analysis Report</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f5f8fa;
+      font-family: Inter,-apple-system, “Segoe UI”, Roboto, “Helvetica Neue”, Arial, sans-serif;
+      color: #0f1724;
+    }
+    .upload-section {
+      margin: 24px 0;
+    }
+    .upload-card {
+      background: #ffffff;
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .upload-card:hover {
+      background: #f0f4f8;
+    }
+    .upload-card input[type=file] {
+      display: none;
+    }
+    .analysis-panel {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 8px 18px rgba(12,18,28,0.06);
+    }
+    .gauge {
+      width: 120px;
+      height: 120px;
+      position: relative;
+      display: inline-block;
+    }
+    .gauge svg circle {
+      fill: none;
+      stroke-width: 10;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+    .gauge .bg {
+      stroke: #e2e8f0;
+    }
+    .gauge .fg {
+      stroke: #2bb0a3;
+      stroke-dasharray: 380;
+      stroke-dashoffset: 380;
+      transition: stroke-dashoffset 0.8s ease-out;
+    }
+    .gauge .value {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      font-size: 24px;
+      font-weight: 600;
+      color: #0f1724;
+    }
+    .skill-list .missing {
+      color: #e53e3e;
+    }
+    .skill-list .present {
+      color: #16b364;
+    }
+    .improvement-steps li {
+      margin-bottom: 12px;
+    }
+    .btn-primary {
+      background: #5b67e2;
+      border: none;
+    }
+    .btn-primary:hover {
+      background: #4a55d4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container py-5">
+
+    <!-- Upload section -->
+    <div class="row upload-section">
+      <div class="col-md-6 mb-3">
+        <label class="upload-card">
+          <span class="h5 d-block mb-2">Upload Resume</span>
+          <i class="bi bi-upload fs-2"></i>
+          <input type="file" accept=".pdf,.doc,.docx">
+        </label>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="upload-card">
+          <span class="h5 d-block mb-2">Upload Job Description (optional)</span>
+          <i class="bi bi-file-earmark-text fs-2"></i>
+          <input type="file" accept=".pdf,.doc,.docx">
+        </label>
+      </div>
+    </div>
+
+    <!-- Analysis panel -->
+    <div class="analysis-panel">
+      <div class="row mb-4">
+        <div class="col-md-4 text-center">
+          <div class="gauge" id="atsGauge">
+            <svg viewBox="0 0 120 120">
+              <circle class="bg" cx="60" cy="60" r="55"></circle>
+              <circle class="fg" cx="60" cy="60" r="55"></circle>
+            </svg>
+            <div class="value" id="atsValue">- -</div>
+          </div>
+          <div class="mt-2 text-muted">ATS Compatibility Score</div>
+        </div>
+        <div class="col-md-8">
+          <h4>Skill Gap Analysis</h4>
+          <div class="skill-list">
+            <p><span class="present">✔</span> Skill A</p>
+            <p><span class="missing">✖</span> Skill B (Missing)</p>
+            <p><span class="missing">✖</span> Skill C (Missing)</p>
+            <p><span class="present">✔</span> Skill D</p>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row mt-4">
+        <div class="col-12">
+          <h4>Improvement Steps</h4>
+          <ul class="improvement-steps">
+            <li>• Use more measurable achievements in your “Experience” section.</li>
+            <li>• Tailor your skills list to match the job description keywords.</li>
+            <li>• Ensure your contact information is in plain text at top of the resume.</li>
+            <li>• Avoid tables or images—ATS systems may not parse them.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="text-end mt-4">
+        <button class="btn btn-primary">Download Full Report (PDF)</button>
+        <button class="btn btn-outline-secondary ms-2">Share with Mentor</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap JS & icons -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Simple gauge animation: set value and animate.
+    const value = 78; // Example score
+    const circle = document.querySelector('#atsGauge .fg');
+    const radius = circle.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+    circle.style.strokeDasharray = `${circumference}`;
+    const offset = circumference * (1 - value / 100);
+    circle.style.strokeDashoffset = offset;
+    document.getElementById('atsValue').innerText = value + '%';
+  </script>
+</body>
+</html>

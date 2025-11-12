@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Grow Ai — Grok-like Assistant</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-900: #071026;
+      --panel: rgba(255,255,255,0.04);
+      --muted: #9aa7b2;
+      --accent-a: #7c5cff;
+      --accent-b: #2bd4c9;
+      --glass: rgba(255,255,255,0.03);
+    }
+    html,body { height:100%; }
+    body{
+      background: linear-gradient(180deg, #031021 0%, var(--bg-900) 100%);
+      color: #e6eef8;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Layout */
+    .app {
+      display: grid;
+      grid-template-columns: 240px 1fr 320px;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 32px auto;
+      padding: 18px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--panel);
+      border-radius: 12px;
+      padding: 18px;
+      height: calc(100vh - 96px);
+      box-shadow: 0 10px 30px rgba(2,8,23,0.6);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .brand {
+      display:flex;
+      gap:10px;
+      align-items:center;
+      margin-bottom:6px;
+    }
+    .brand .logo {
+      width:44px;height:44px;border-radius:10px;
+      background: linear-gradient(135deg,var(--accent-a),var(--accent-b));
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;
+      box-shadow: 0 6px 18px rgba(124,92,255,0.15), inset 0 -6px 18px rgba(0,0,0,0.2);
+    }
+    .nav-item {
+      padding:10px;border-radius:10px;color:var(--muted);cursor:pointer;
+    }
+    .nav-item.active { background: linear-gradient(90deg, rgba(124,92,255,0.12), rgba(43,212,201,0.06)); color:#fff; }
+
+    /* Chat panel */
+    .panel {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius: 12px;
+      padding: 12px;
+      height: calc(100vh - 96px);
+      display:flex;
+      flex-direction:column;
+      box-shadow: 0 18px 40px rgba(2,8,23,0.6);
+    }
+    .chat-header {
+      display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.02);
+    }
+    .chat-body {
+      padding:18px;
+      overflow:auto;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .msg {
+      max-width:78%;
+      padding:12px 14px;
+      border-radius:14px;
+      line-height:1.45;
+      font-size:15px;
+      box-shadow: 0 6px 20px rgba(2,8,23,0.6);
+      word-break:break-word;
+    }
+    .msg.bot {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.03);
+      align-self:flex-start;
+      color: #e6eef8;
+    }
+    .msg.user {
+      background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+      color: white;
+      align-self:flex-end;
+      border-bottom-right-radius:6px;
+    }
+
+    .meta {
+      font-size:12px;color:var(--muted);margin-bottom:8px;
+    }
+
+    /* code block style */
+    pre.code {
+      background:#071b27;border-radius:8px;padding:12px;overflow:auto;border:1px solid rgba(255,255,255,0.04);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+      font-size:13px;color:#cdeef3;
+      margin-top:8px;
+    }
+    .code-toolbar { display:flex; gap:8px; justify-content:flex-end; margin-top:6px; }
+
+    /* typing */
+    .typing { display:inline-block; width:48px; height:18px; }
+    .dot { display:inline-block;width:8px;height:8px;border-radius:99px;margin:0 4px;background:#9fb7ff;opacity:0.85; animation: blink 1s infinite; }
+    .dot:nth-child(2){ animation-delay: 0.15s }
+    .dot:nth-child(3){ animation-delay: 0.3s }
+    @keyframes blink { 0%{opacity:0.2} 50%{opacity:1} 100%{opacity:0.2} }
+
+    /* Input area */
+    .composer {
+      display:flex;gap:10px;align-items:center;padding:12px;border-top:1px solid rgba(255,255,255,0.02);
+    }
+    .composer .input {
+      flex:1;padding:12px 14px;border-radius:999px;background:var(--glass);border:1px solid rgba(255,255,255,0.03);color:#eaf2ff;
+      outline:none;font-size:15px;
+    }
+    .composer .input:focus { box-shadow: 0 8px 30px rgba(124,92,255,0.12); border-color: rgba(124,92,255,0.45); }
+
+    .btn-send {
+      background: linear-gradient(135deg,var(--accent-a),var(--accent-b));
+      border: none;color: #fff;padding:10px 14px;border-radius:12px;
+      box-shadow: 0 8px 24px rgba(124,92,255,0.18);
+    }
+
+    /* Right panel (controls/examples) */
+    .right-panel {
+      background: var(--panel);
+      border-radius:12px;padding:16px;height:calc(100vh - 96px);overflow:auto;
+    }
+    .section-title { font-size:13px;color:var(--muted);margin-bottom:8px; }
+
+    .example {
+      background: rgba(255,255,255,0.02);
+      padding:10px;border-radius:10px;margin-bottom:8px;color:var(--muted);cursor:pointer;
+    }
+    .small-muted { font-size:13px;color:var(--muted) }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .app { grid-template-columns: 1fr; padding: 12px; }
+      .sidebar, .right-panel { display:none; }
+      .panel { height: calc(100vh - 48px); margin-bottom:12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container-fluid px-4">
+    <div class="app">
+
+      <!-- LEFT SIDEBAR -->
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">GA</div>
+          <div>
+            <div style="font-weight:700">Grow Ai</div>
+            <div class="small-muted">Grok-like Assistant</div>
+          </div>
+        </div>
+
+        <div class="nav-list">
+          <div class="nav-item active"><i class="bi bi-chat-left-text me-2"></i> Assistant</div>
+          <div class="nav-item"><i class="bi bi-journal-text me-2"></i> Conversations</div>
+          <div class="nav-item"><i class="bi bi-graph-up me-2"></i> Insights</div>
+          <div class="nav-item"><i class="bi bi-gear me-2"></i> Settings</div>
+        </div>
+
+        <div style="margin-top:auto">
+          <div class="small-muted mb-1">Account</div>
+          <div class="d-flex align-items-center gap-2">
+            <img src="https://via.placeholder.com/40/7c5cff/ffffff?text=G" alt="avatar" style="border-radius:8px">
+            <div>
+              <div style="font-weight:600">Candidate</div>
+              <div class="small-muted">grow.ai@example.com</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- CENTER CHAT PANEL -->
+      <main class="panel" role="main" aria-label="Chat panel">
+        <div class="chat-header">
+          <div>
+            <div style="font-weight:700">Grow Ai Assistant</div>
+            <div class="small-muted">Ask anything about interviews, resumes, or career growth</div>
+          </div>
+          <div class="d-flex gap-2 align-items-center">
+            <button class="btn btn-sm btn-outline-light" id="btnClear"><i class="bi bi-trash"></i></button>
+            <button class="btn btn-sm btn-outline-light" id="btnExport"><i class="bi bi-download"></i> Export</button>
+          </div>
+        </div>
+
+        <div class="chat-body" id="chatBody" tabindex="0" aria-live="polite">
+          <!-- Initial bot message -->
+          <div>
+            <div class="meta">System • Grow Ai</div>
+            <div class="msg bot">
+              👋 Hi — I'm Grow Ai. I can help you practice interviews, review resumes, and craft answers. Try asking:
+              <div class="mt-2 example" onclick="insertExample('Give me a 60-second elevator pitch about myself')">Give me a 60-second elevator pitch about myself</div>
+              <div class="mt-1 example" onclick="insertExample('How to answer: Tell me about a time you failed?')">How to answer: Tell me about a time you failed?</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="composer">
+          <input id="userInput" class="input" placeholder="Ask Grow Ai — e.g. 'How do I explain a 6-month employment gap?'" aria-label="Message input" />
+          <button id="sendBtn" class="btn-send" title="Send (Enter)"><i class="bi bi-send"></i></button>
+        </div>
+      </main>
+
+      <!-- RIGHT CONTROLS & EXAMPLES -->
+      <aside class="right-panel">
+        <div class="section">
+          <div class="section-title">Model & Settings</div>
+          <div class="mb-3">
+            <select id="modelSelect" class="form-select form-select-sm mb-2" aria-label="Model select">
+              <option value="growai-grok">growai-grok (default)</option>
+              <option value="growai-pro">growai-pro</option>
+              <option value="growai-code">growai-code</option>
+            </select>
+
+            <label class="small-muted d-block mb-1">Temperature <span id="tempVal" style="float:right">0.2</span></label>
+            <input id="tempRange" type="range" min="0" max="1" step="0.05" value="0.2" class="form-range">
+          </div>
+
+          <div class="section-title">Quick Prompts</div>
+          <div>
+            <div class="example" onclick="insertExample('Help me summarize my resume for a recruiter')">Summarize my resume for a recruiter</div>
+            <div class="example" onclick="insertExample('Create STAR answer for teamwork example')">Create STAR answer for teamwork example</div>
+            <div class="example" onclick="insertExample('Mock interview question: behavioral — leadership')">Mock interview question: behavioral — leadership</div>
+          </div>
+
+          <hr class="my-3">
+
+          <div class="section-title">Code & Snippets</div>
+          <div class="small-muted mb-2">When the assistant returns code, you can copy or run it.</div>
+          <div class="d-grid gap-2">
+            <button class="btn btn-sm btn-outline-light" onclick="insertExample('Show me a JS implementation of two-sum')">JS two-sum</button>
+            <button class="btn btn-sm btn-outline-light" onclick="insertExample('Provide Python resume parser snippet')">Python resume parser</button>
+          </div>
+
+          <hr class="my-3">
+
+          <div class="section-title">Session</div>
+          <div class="small-muted">Saved conversations will appear here (coming soon).</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Utilities
+    const chatBody = document.getElementById('chatBody');
+    const sendBtn = document.getElementById('sendBtn');
+    const userInput = document.getElementById('userInput');
+    const tempRange = document.getElementById('tempRange');
+    const tempVal = document.getElementById('tempVal');
+
+    tempRange.addEventListener('input', ()=> tempVal.textContent = tempRange.value);
+
+    // Insert quick example into input
+    function insertExample(text){
+      userInput.value = text;
+      userInput.focus();
+    }
+
+    // Append message helpers
+    function appendUserMessage(text){
+      const wrapper = document.createElement('div');
+      wrapper.className = 'd-flex flex-column align-items-end';
+      const meta = document.createElement('div');
+      meta.className = 'meta small-muted'; meta.innerText = 'You • just now';
+      const msg = document.createElement('div');
+      msg.className = 'msg user'; msg.innerText = text;
+      wrapper.appendChild(meta); wrapper.appendChild(msg);
+      chatBody.appendChild(wrapper);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    function appendBotMessage(text, options = {}){
+      const wrapper = document.createElement('div');
+      const meta = document.createElement('div');
+      meta.className = 'meta small-muted'; meta.innerText = 'Grow Ai • assistant';
+      const msg = document.createElement('div');
+      msg.className = 'msg bot';
+      // allow HTML (for code blocks)
+      msg.innerHTML = text;
+      wrapper.appendChild(meta); wrapper.appendChild(msg);
+
+      // code toolbar
+      const codeBlocks = msg.querySelectorAll('pre.code');
+      if(codeBlocks.length){
+        codeBlocks.forEach((pre)=>{
+          const toolbar = document.createElement('div');
+          toolbar.className = 'code-toolbar';
+          const copyBtn = document.createElement('button');
+          copyBtn.className = 'btn btn-sm btn-outline-light';
+          copyBtn.innerHTML = '<i class="bi bi-clipboard"></i> Copy';
+          copyBtn.onclick = ()=> {
+            navigator.clipboard.writeText(pre.innerText).then(()=> {
+              copyBtn.innerHTML = '<i class="bi bi-check2"></i> Copied';
+              setTimeout(()=> copyBtn.innerHTML = '<i class="bi bi-clipboard"></i> Copy',1500);
+            });
+          };
+          toolbar.appendChild(copyBtn);
+          pre.parentNode.insertBefore(toolbar, pre);
+        });
+      }
+
+      chatBody.appendChild(wrapper);
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
+
+    // Typing indicator
+    function showTyping(){
+      const t = document.createElement('div');
+      t.className = 'd-flex flex-column align-items-start typing-wrap';
+      const meta = document.createElement('div'); meta.className='meta small-muted'; meta.innerText='Grow Ai • typing';
+      const holder = document.createElement('div'); holder.className='msg bot';
+      const dots = document.createElement('div'); dots.className='typing';
+      dots.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+      holder.appendChild(dots);
+      t.appendChild(meta); t.appendChild(holder);
+      chatBody.appendChild(t);
+      chatBody.scrollTop = chatBody.scrollHeight;
+      return t;
+    }
+    function removeTyping(node){ if(node && node.remove) node.remove(); }
+
+    // Simulated assistant response (replace with real API call)
+    async function assistantReply(userText){
+      // show typing indicator
+      const typingNode = showTyping();
+
+      // Simulate variable response time and chunks like streaming
+      const simulated = mockResponseFor(userText);
+      await sleep(600 + Math.random()*600);
+
+      removeTyping(typingNode);
+      // stream text character by character
+      let out = '';
+      const container = document.createElement('div');
+      const meta = document.createElement('div'); meta.className='meta small-muted'; meta.innerText='Grow Ai • assistant';
+      const msg = document.createElement('div'); msg.className='msg bot';
+      wrapper = document.createElement('div');
+      wrapper.appendChild(meta); wrapper.appendChild(msg);
+      chatBody.appendChild(wrapper);
+      chatBody.scrollTop = chatBody.scrollHeight;
+
+      for(let i=0;i<simulated.length;i++){
+        out += simulated[i];
+        msg.innerHTML = formatTextToHTML(out);
+        chatBody.scrollTop = chatBody.scrollHeight;
+        await sleep(12 + Math.random()*8);
+      }
+
+      // after finished maybe add code toolbar if there is a code block (handled on append)
+      // find code blocks and add copy buttons
+      const codeBlocks = msg.querySelectorAll('pre.code');
+      codeBlocks.forEach((pre)=>{
+        const toolbar = document.createElement('div');
+        toolbar.className = 'code-toolbar';
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'btn btn-sm btn-outline-light';
+        copyBtn.innerHTML = '<i class="bi bi-clipboard"></i> Copy';
+        copyBtn.onclick = ()=> {
+          navigator.clipboard.writeText(pre.innerText).then(()=> {
+            copyBtn.innerHTML = '<i class="bi bi-check2"></i> Copied';
+            setTimeout(()=> copyBtn.innerHTML = '<i class="bi bi-clipboard"></i> Copy',1500);
+          });
+        };
+        pre.parentNode.insertBefore(toolbar, pre);
+      });
+    }
+
+    // Basic helper to format simple markdown-like code fences to <pre class="code">
+    function formatTextToHTML(text){
+      // Replace ```lang\ncode\n``` with pre.code
+      const codeFence = /```(?:([\w-]+)\n)?([\s\S]*?)```/g;
+      let html = text.replace(/\n/g, '<br>');
+      html = html.replace(codeFence, (m, lang, code)=>{
+        const escaped = escapeHtml(code);
+        return `<pre class="code">${escaped}</pre>`;
+      });
+      // Minor escapes for < and >
+      return html;
+    }
+
+    function escapeHtml(unsafe) {
+      return unsafe.replace(/[&<"'>]/g, function(m) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'})[m]; });
+    }
+
+    function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+    // Mock response generator (demo) — replace with backend call
+    function mockResponseFor(input){
+      input = input.toLowerCase();
+      if(input.includes('elevator')) {
+        return "Sure — here's a 60-second elevator pitch you can use:\n\n```text\nHi, I'm [Name]. I'm a software engineer with 3 years of experience building scalable web services. I specialize in backend systems using Node.js and Python, and I love turning ambiguous problems into clean, maintainable code. Recently I led a project that improved API throughput by 40%, and I'm excited to apply that experience to roles where I can build high-impact products.\n```\n\nWant it shorter or more technical?";
+      }
+      if(input.includes('two-sum') || input.includes('two sum')) {
+        return "Here's a concise JavaScript solution for Two Sum:\n\n```js\nfunction twoSum(nums, target) {\n  const map = new Map();\n  for (let i = 0; i < nums.length; i++) {\n    const need = target - nums[i];\n    if (map.has(need)) return [map.get(need), i];\n    map.set(nums[i], i);\n  }\n  return [];\n}\n```\n\nCopy and paste into your editor and run with sample inputs.";
+      }
+      if(input.includes('resume') && input.includes('summarize')){
+        return "I can summarize your resume. Paste your resume text or upload it and I'll generate a concise recruiter-friendly summary highlighting your top achievements and keywords to match a job description.";
+      }
+      // default reply
+      return "Good question — here's a quick guide:\n\n1. Structure your answer (use STAR).\n2. Be concise: aim for 60–90 seconds.\n3. Use numbers to quantify impact.\n\nWould you like a tailored example for your role?";
+    }
+
+    // Main send flow
+    async function sendMessage(){
+      const text = userInput.value.trim();
+      if(!text) return;
+      appendUserMessage(text);
+      userInput.value = '';
+      await assistantReply(text);
+    }
+
+    sendBtn.addEventListener('click', sendMessage);
+    userInput.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); sendMessage(); }
+    });
+
+    // Clear & Export
+    document.getElementById('btnClear').addEventListener('click', ()=>{
+      // Remove all except the first system message
+      chatBody.querySelectorAll('div').forEach((n, idx)=> { if(idx>0) n.remove(); });
+      userInput.focus();
+    });
+    document.getElementById('btnExport').addEventListener('click', ()=>{
+      // Simple export: collect messages and download as txt
+      let s = '';
+      chatBody.querySelectorAll('.msg').forEach(m=>{
+        const who = m.classList.contains('user') ? 'You' : 'Grow Ai';
+        s += who + ':\n' + m.innerText + '\n\n';
+      });
+      const blob = new Blob([s], {type:'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'conversation.txt'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Accessibility: focus chat
+    chatBody.addEventListener('keydown', (e)=>{ if(e.key === 'ArrowDown') chatBody.scrollTop += 60; });
+
+    // NOTE: Replace assistantReply/mockResponseFor with real API integration:
+    // Example (pseudo):
+    // const response = await fetch('/api/ai', {method:'POST', body: JSON.stringify({prompt: text, model: modelSelect.value, temp: tempRange.value})});
+    // const stream = response.body; // then stream tokens and append to UI
+  </script>
+</body>
+</html>
+
