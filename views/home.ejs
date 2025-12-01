@@ -21,19 +21,19 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Dashboard</a>
+                            <a class="nav-link" aria-current="page" href="/dashboard">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Resume analysis</a>
+                            <a class="nav-link" href="/resume-analysis">Resume analysis</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Interview Prep</a>
+                            <a class="nav-link" href="/practice">Interview Prep</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-disabled="true">Job search</a>
+                            <a class="nav-link" href="/Gowthami">Gowthami</a>
                         </li>
                         <li class="nav-item profile">
-                            <a class="nav-link" aria-disabled="true">Profile</a>
+                            <a class="nav-link" href="/profile"><i class="fa-solid fa-user"></i></a>
                         </li>
 
                     </ul>
@@ -44,12 +44,18 @@
     </div>
         <div class="main-content">
             <div class="welcome">
-                <h2>Welcome back </h2>
+                <h2>Welcome back Gowthami</h2>
                 <p>Fear fades when preparation meets confidence — train your mind, and the stage becomes yours</p>
                 <div>
-                <button type="button" class="btn btn-outline-primary">Start Session</button>
-                <button type="button" class="btn btn-outline-info">Continue Session</button>
-                <button type="button" class="btn btn-outline-success">Dashboard</button>
+                
+               <a href="/practice"><button type="button" class="btn btn-outline-primary">Start Session</button></a> 
+            
+             
+                <a href="/practice"><button type="button" class="btn btn-outline-info">Continue Session</button></a>
+         
+          
+               <a href="/dashboard"><button type="button" class="btn btn-outline-success">Dashboard</button></a>
+          
                 </div>
             </div>
         </div>
@@ -82,8 +88,9 @@
                 </p>
             </li>
           
-            
+            <form action="/practice" method="GET">
             <button class="btn get-started">Get Started</button>
+            </form>
             </div>
            </div> 
 
@@ -94,7 +101,7 @@
                 <div class="cards-container">
                     <div class="card feature" style="width: 18rem;">
   <div class="card-body">
-    <a href="#">
+    <a href="/resume-analysis">
  
     <h5 class="card-title">Smart Resume Analysis</h5>
     <p class="card-text">AI-powered analysis identifies skill gaps between your resume and job requirements. Get actionable recommendations to optimize your CV.</p>
@@ -103,7 +110,7 @@
 </div>
 <div class="card feature" style="width: 18rem;">
   <div class="card-body">
-    <a href="#">
+    <a href="/practice">
     <h5 class="card-title">Speech & Tone Analysis</h5>
     <p class="card-text">Get instant feedback on clarity, pace, filler words, and vocal confidence. Improve your communication with data-driven insights</p>
         </a>
@@ -111,7 +118,7 @@
 </div>
 <div class="card feature" style="width: 18rem;">
   <div class="card-body">
-    <a href="#">
+    <a href="/practice">
     <h5 class="card-title">AI Mock Interviews</h5>
     <p class="card-text">Practice with dynamic interview questions tailored to your role. Receive detailed feedback on answer quality and structure.</p>
         </a>
@@ -119,7 +126,7 @@
 </div>
 <div class="card feature" style="width: 18rem;">
   <div class="card-body">
-    <a href="#">
+    <a href="/problem-set">
     <h5 class="card-title">Live Coding Editor</h5>
     <p class="card-text">Built-in IDE with syntax highlighting and execution. Get real-time analysis on time complexity, space complexity, and code quality.</p>
         </a>
@@ -155,39 +162,58 @@
         
         <div class="card review-card">
   <div class="card-body review-card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+    <h5 class="card-title">
+
+        <% for (let i=1;i<=feedback[0].rating;i++){ %>
+            <i class="fa-solid fa-star"></i>
+    <%}%>
+    
+    </h5>
+    <p class="card-text"><%=feedback[0].comment%>
+    </p>
+    <p class="card-text"><small class="text-body-secondary"><%= feedback[0].createdAt.toString().split(" ").slice(1,4).join(" ") %></small></p>
   </div>
-  <img src="..." class="card-img-bottom" alt="...">
+
 </div>
 
 <div class="card review-card">
   <div class="card-body review-card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+    <h5 class="card-title">
+        <% for (let i=1;i<=feedback[2].rating;i++){ %>
+            <i class="fa-solid fa-star"></i>
+    <%}%>
+    </h5>
+    <p class="card-text"><%=feedback[1].comment%></p>
+    <p class="card-text"><small class="text-body-secondary"><%= feedback[1].createdAt.toString().split(" ").slice(1,4).join(" ") %></small></p>
   </div>
-  <img src="..." class="card-img-bottom" alt="...">
+  
 </div>
 
 
 <div class="card review-card">
   <div class="card-body review-card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+    <h5 class="card-title">
+        <% for (let i=1;i<=feedback[3].rating;i++){ %>
+            <i class="fa-solid fa-star"></i>
+    <%}%>
+    </h5>
+    <p class="card-text"><%=feedback[2].comment%></p>
+    <p class="card-text"><small class="text-body-secondary"><%= feedback[2].createdAt.toString().split(" ").slice(1,4).join(" ") %></small></p>
   </div>
-  <img src="..." class="card-img-bottom" alt="...">
+ 
 </div>
 
 <div class="card review-card">
   <div class="card-body review-card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+    <h5 class="card-title">
+        <% for (let i=1;i<=feedback[4].rating;i++){ %>
+            <i class="fa-solid fa-star"></i>
+    <%}%>
+    </h5>
+    <p class="card-text"><%=feedback[3].comment%></p>
+    <p class="card-text"><small class="text-body-secondary"><%= feedback[3].createdAt.toString().split(" ").slice(1,4).join(" ") %></small></p>
   </div>
-  <img src="..." class="card-img-bottom" alt="...">
+  
 </div>
 
 
@@ -206,6 +232,7 @@
                     <li>Contact us</li>
                     <li>Careers</li>
                     <li>FAQ</li>
+                    <a href="/feedback" style="text-decoration: none; color: black; opacity:0.9"><li>Feedback</li></a>
                     <li>How Grow AI Works</li>
                 </ul>
             </div>

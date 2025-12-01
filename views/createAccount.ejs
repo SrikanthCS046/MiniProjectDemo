@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Grow AI — Create Account</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    /* Page background */
+    body {
+      background: linear-gradient(180deg,#f6f8fb 0%, #ffffff 100%);
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color: #0f1724;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Layout container */
+    .signup-wrap {
+      max-width: 1200px;
+      margin: 48px auto;
+      box-shadow: 0 30px 60px rgba(18, 38, 63, 0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    /* Two-column grid */
+    .promo-panel {
+      background: linear-gradient(180deg,#4b6cf2 0%, #5bd3c0 100%);
+      color: #fff;
+      padding: 48px 36px;
+      min-height: 640px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .promo-brand {
+      display:flex;align-items:center;gap:12px;
+    }
+    .promo-brand .logo {
+      width:48px;height:48px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+      background: rgba(255,255,255,0.12);
+      font-weight:700;color:#fff;font-size:18px;
+      box-shadow: 0 8px 30px rgba(27,58,128,0.18), inset 0 -6px 18px rgba(255,255,255,0.03);
+    }
+
+    .promo-headline {
+      margin-top:28px;
+      font-weight:700;font-size:32px;line-height:1.05;
+    }
+
+    .promo-sub {
+      margin-top:18px;color:rgba(255,255,255,0.9);max-width:420px;font-size:15px;
+    }
+
+    .features {
+      display:flex;gap:18px;margin-top:28px;flex-wrap:wrap;
+    }
+    .feature {
+      display:flex;gap:12px;align-items:flex-start;min-width:160px;
+    }
+    .feature .icon {
+      width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.14);display:flex;align-items:center;justify-content:center;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+    .feature .label { font-size:14px;font-weight:600; }
+
+    .promo-hero {
+      margin-top:28px; display:flex; gap:18px; align-items:center;
+    }
+    .hero-img {
+      width:180px;height:180px;border-radius:12px;background:linear-gradient(135deg,rgba(255,255,255,0.12), rgba(0,0,0,0.05));
+      display:flex;align-items:center;justify-content:center; overflow:hidden;
+    }
+    .hero-people {
+      flex:1;color:rgba(255,255,255,0.95); font-weight:700;
+    }
+
+    /* Right form */
+    .form-panel {
+      padding: 48px 40px;
+      min-height: 640px;
+      background: #ffffff;
+      position: relative;
+    }
+
+    .steps {
+      display:flex;align-items:center;gap:16px;margin-bottom:28px;
+      color:#94a3b8;font-weight:600;font-size:14px;
+    }
+    .step {
+      display:flex;align-items:center;gap:10px;
+    }
+    .step .circle {
+      width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;border:2px solid #e6eef8;color:#1f2937;background:#fff;
+      font-weight:700;
+    }
+    .step.active .circle { background:#fff;border-color:#0ea5a4;color:#0ea5a4;box-shadow:0 8px 20px rgba(14,165,164,0.08) }
+
+    h2.create-title { font-size:28px;font-weight:700;margin-bottom:10px; }
+
+    .hint { color:#6b7280;font-size:14px;margin-bottom:20px; }
+
+    /* Form styles */
+    .form-control {
+      border-radius:10px;
+      padding:14px 16px;
+      border:1px solid #e6eef8;
+      box-shadow:none;
+    }
+    .form-control:focus {
+      outline:none;
+      box-shadow:0 10px 30px rgba(74, 123, 255, 0.07);
+      border-color:#5b67e2;
+    }
+
+    .password-hint {
+      font-size:13px;color:#94a3b8;margin-top:8px;
+    }
+    .strength {
+      height:8px;border-radius:6px;background:#eef2ff;margin-top:10px;overflow:hidden;
+    }
+    .strength > i { display:block;height:100%;width:0%;background:linear-gradient(90deg,#ffb86b,#5bd3c0);transition:width .6s ease; }
+
+    /* fake reCAPTCHA box */
+    .recaptcha {
+      border:1px solid #e6eef8;border-radius:8px;padding:12px;display:flex;align-items:center;gap:12px;background:#fafcff;margin-top:18px;
+    }
+
+    /* CTA */
+    .btn-cta {
+      display:inline-block;width:100%;padding:14px;border-radius:12px;background:linear-gradient(90deg,#2bd3c0,#0ea5a4);color:#01302f;font-weight:700;border:none;
+      box-shadow: 0 18px 46px rgba(43,211,192,0.16);
+      transition:transform .14s ease, box-shadow .14s ease;
+    }
+    .btn-cta:hover { transform:translateY(-3px); box-shadow: 0 26px 56px rgba(43,211,192,0.18); }
+
+    .divider {
+      display:flex;align-items:center;gap:12px;margin:18px 0;color:#94a3b8;
+    }
+    .divider:before, .divider:after {
+      content:"";height:1px;flex:1;background:#eef2ff;
+      opacity:0.35;
+    }
+
+    .social-btn {
+      border-radius:10px;padding:10px 12px;border:1px solid #e6eef8;background:#fff;width:100%;
+      display:flex;align-items:center;gap:12px;justify-content:center;color:#23303b;font-weight:600;
+    }
+    .social-icon {
+      width:18px;height:18px;
+    }
+
+    /* small / responsive tweaks */
+    @media (max-width: 991px){
+      .signup-wrap { margin: 24px; }
+      .promo-panel { display:none; }
+      .form-panel { padding:28px; min-height:auto; }
+    }
+
+    /* subtle bottom-floating live chat bubble */
+    .chat-floating {
+      position: absolute; left:18px; bottom:18px; z-index:20;
+      display:flex;align-items:center;gap:12px;background:#fff;padding:10px 14px;border-radius:12px;box-shadow:0 12px 32px rgba(7,20,40,0.12);
+    }
+    .chat-floating img { width:42px;height:42px;border-radius:8px; }
+    .chat-floating .text { font-weight:700;color:#0f1724; }
+  </style>
+
+</head>
+<body>
+
+  <div class="container signup-wrap">
+    <div class="row g-0">
+      <!-- Left promotional panel -->
+      <div class="col-lg-6 promo-panel">
+        <div>
+          <div class="promo-brand">
+            <div class="logo">GA</div>
+            <div>
+              <div style="font-weight:700;font-size:18px">Grow Ai</div>
+              <div style="font-size:13px;opacity:0.95">Interview practice that builds confidence</div>
+            </div>
+          </div>
+
+          <div class="promo-headline">Ace every interview — get hired faster</div>
+          <div class="promo-sub">Human-like mock interviews, immediate AI feedback, and guided practice plans to help you stand out and land offers.</div>
+
+          <div class="features">
+            <div class="feature">
+              <div class="icon"><i class="bi bi-person-check" style="font-size:20px"></i></div>
+              <div>
+                <div class="label">Sell yourself</div>
+                <div style="font-size:13px;opacity:0.95">Learn how to present achievements clearly.</div>
+              </div>
+            </div>
+
+            <div class="feature">
+              <div class="icon"><i class="bi bi-lightning-charge" style="font-size:20px"></i></div>
+              <div>
+                <div class="label">Know what to expect</div>
+                <div style="font-size:13px;opacity:0.95">Question patterns and model answers.</div>
+              </div>
+            </div>
+
+            <div class="feature">
+              <div class="icon"><i class="bi bi-chat-dots" style="font-size:20px"></i></div>
+              <div>
+                <div class="label">Instant AI feedback</div>
+                <div style="font-size:13px;opacity:0.95">Actionable tips after each mock interview.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="promo-hero">
+          <div class="hero-img">
+            <!-- placeholder hero image -->
+            <img src="https://static.vecteezy.com/ti/vetor-gratis/p1/7340656-ilustracaoial-de-entrevista-de-emprego-gratis-vetor.jpg" alt="people celebrating" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div class="hero-people">
+            <div style="font-size:14px">Sign up today and start building your future with Grow AI. From resume insights to interview simulations, we’re here to celebrate your growth every step of the way.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right form panel -->
+      <div class="col-lg-6 form-panel">
+        <div class="steps">
+          <div class="step active"><div class="circle">1</div> Create Account</div>
+          
+        </div>
+
+        <h2 class="create-title">Create Account</h2>
+        <div class="hint">Join Grow Ai to start practicing interviews and get instant AI feedback.</div>
+
+        
+<form action="/createAccount" method="post" novalidate class="needs-validation">
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" required name="user[email]">
+    <div class="invalid-feedback">Please enter your email ID.</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="inputPassword5" class="form-label">Password</label>
+    <input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock" required name="user[password]" minlength="8">
+    <div id="passwordHelpBlock" class="form-text">
+      Your password must be 8–20 characters long, contain letters and numbers, and must not include spaces or emojis.
+    </div>
+    <div class="invalid-feedback">Please enter a valid password.</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="inputPassword6" class="form-label">Confirm Password</label>
+    <input type="password" id="inputPassword6" class="form-control" required name="user[confirmPassword]">
+    <div class="invalid-feedback">Passwords do not match.</div>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100 mt-3">Get Started</button>
+</form>
+
+<script>
+  (() => {
+    'use strict';
+    const form = document.querySelector('.needs-validation');
+    const password = document.getElementById('inputPassword5');
+    const confirmPassword = document.getElementById('inputPassword6');
+
+    form.addEventListener('submit', event => {
+      // Prevent default if invalid
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      else {
+          confirmPassword.setCustomValidity("");
+        }
+        if (password.value !== confirmPassword.value) {
+        event.preventDefault();
+        event.stopPropagation();
+          confirmPassword.setCustomValidity("Passwords do not match");
+        }
+
+
+      form.classList.add('was-validated');
+    }, false);
+  })();
+</script>
+
+
+
+
+
+
+
+        <!-- small floating chat bubble -->
+        
+          <img src="    " alt="agent">
+          <div>
+            <div style="font-size:13px">Questions? Chat with us!</div>
+            <div style="font-size:12px;color:#6b7280">Support is away • Reply ≈ 1 hr</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
+

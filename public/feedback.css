@@ -1,0 +1,68 @@
+body {
+    background: #f4f7fc;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Center Container */
+.feedback-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Card Styling */
+.feedback-card {
+    background: #ffffff;
+    width: 430px;
+    padding: 35px 40px;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Headings */
+.title {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 25px;
+}
+
+/* Inputs */
+.form-label {
+    font-weight: 600;
+}
+
+.form-select,
+.form-control {
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* Button */
+.submit-btn {
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #0056d6;
+    transform: scale(1.02);
+}
+
+/* Simple fade animation */
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+

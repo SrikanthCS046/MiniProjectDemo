@@ -10,7 +10,7 @@
 
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
   <style>
     :root{
       --bg:#f6f9fb;
@@ -118,6 +118,17 @@
     @media (max-width: 992px){
       #editorContainer { height: 44vh; }
     }
+    .profile-link a{
+    text-decoration: none;
+    color:#000;
+}
+.profile-link i{
+    font-size:1.4rem ;
+    width:2.2rem;
+    height:1.35em;
+    border-radius: 50%;
+    background-color:rgb(250, 126, 250);
+}
   </style>
 </head>
 <body>
@@ -126,7 +137,7 @@
   <div class="topbar mb-3">
     <div class="container-fluid d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center gap-3">
-        <a class="fs-5 fw-semibold text-decoration-none" href="#">InterviewPrep</a>
+        <a class="fs-5 fw-semibold text-decoration-none" href="/">Grow Ai</a>
         <nav class="d-none d-md-flex gap-2">
           <a class="text-muted text-decoration-none" href="#">Problemset</a>
           <a class="text-muted text-decoration-none" href="#">My Submissions</a>
@@ -136,7 +147,10 @@
 
       <div class="d-flex align-items-center gap-2">
         <input class="form-control form-control-sm me-2 d-none d-md-block" style="width:200px" placeholder="Search problems...">
-        <button class="btn btn-outline-secondary btn-sm">Sign in</button>
+        <div class="profile-link">
+            
+        <a href="/profile"><i class="fa-solid fa-user"></i></a>
+        </div>
       </div>
     </div>
   </div>
@@ -282,8 +296,8 @@
               </select>
 
               <div class="btn-group">
-                <button id="btnRun" class="btn btn-sm btn-outline-primary"><i class="bi bi-play-fill"></i> Run</button>
-                <button id="btnSubmit" class="btn btn-sm btn-primary">Submit</button>
+                <button id="btnRun" class="btn btn-sm btn-outline-primary" style="height:2rem;"><i class="bi bi-play-fill"></i></button>
+                <button id="btnSubmit" class="btn btn-sm btn-primary" style="height:2rem;">Submit</button>
               </div>
             </div>
           </div>
